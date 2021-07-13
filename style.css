@@ -10,8 +10,8 @@ small {
     font-size: min(3vw, 1rem);
 }
 #title {
-    font-size: min(6.5vw, 3rem);
-    margin-top: 1.5rem;
+    font-size: min(6.5vw, 2rem);
+    margin-top: 1rem;
     margin-bottom: 0;
 }
 #htitle, #wtitle, #ttitle, #ftitle, #rtitle {
@@ -34,6 +34,7 @@ small {
     margin-right: min(3vw, 2rem);
     display: flex;
     align-items: flex-end;
+    margin-top: 0.5rem;
 }
 #winfobox {
     display: flex;
@@ -90,6 +91,7 @@ small {
     min-height: 8rem;
 }
 #rdata {
+    margin-top: 0.5rem;
     font-size: min(8vw, 3rem);
 }
 
@@ -99,6 +101,7 @@ small {
     width: 100%;
     overflow: wrap;
     align-items: stretch;
+    margin-bottom: 1rem;
 }
 #showT {
     background-color: lightskyblue;
@@ -136,10 +139,10 @@ small {
     font-size: max(0.6rem, min(1vw, 1rem));
 }
 .ficon {
-    width: max(50%, min(10vw, 100%));
+    width: max(50%, min(10vw, 75%));
 }
 .fPSR {
-    width: max(50%, min(5vw, 100%));
+    width: max(50%, min(5vw, 60%));
 }
 
 

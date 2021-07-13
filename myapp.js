@@ -36,6 +36,7 @@ async function main () {
   }
 }
 
+
 // Build the header block
 function generateHeader(reportJson) {
   let header = document.getElementById('header');
@@ -96,6 +97,7 @@ function generateHeader(reportJson) {
 
 }
 
+
 function generateWarningBlc(reportJson) {
   let warning = document.getElementById('warning');
   let wtitle = document.createElement('div');
@@ -143,12 +145,12 @@ function generateRainfallBlc(reportJson) {
   let rblock = document.createElement('div');
   rblock.id = 'rdata';
   rainfall.append(rblock);
+  document.getElementById('rdata').innerHTML = `<img id='umbrella' src='images/rain-48.png'><span class='rmax'>-<small>mm</small></span>`;
   document.getElementById('rain-reg').addEventListener('change', event => {
     let rMax = rainfallArray[event.target.value].max;
     document.getElementById('rdata').innerHTML = `<img id='umbrella' src='images/rain-48.png'><span class='rmax'>${rMax}<small>mm</small></span>`;
   });
 }
-
 
 //Build the selection block for selecting temp data of different locations
 function generateTempBlc(reportJson) {
