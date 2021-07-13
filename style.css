@@ -1,0 +1,107 @@
+/* Styling rules for our Web App */
+
+body {
+    background-color: whitesmoke;
+    font-family: Verdana, Geneva, sans-serif;
+    margin: 0 2rem;
+}
+#icon {
+    height: 7rem;
+}
+#drop {
+    height: 5rem;
+    margin-right: 0.5rem;
+}
+#htitle, #ttitle, #ftitle {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+#header, #showT, #forecast {
+    padding: 2rem;
+    border-radius: 1rem;
+    margin: 0.5rem 0;
+}
+#showT, #forecast {
+    display: inline-block;
+}
+
+#header {
+    background-color: lightblue;
+}
+.winfo {
+    margin-right: 2rem;
+}
+#winfobox {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+#temp, .ltemp {
+    font-size: 5rem;
+}
+#humidity {
+    font-size: 2rem;
+}
+.sup {
+    font-size: 2rem;
+    position: relative;
+    top: -2rem;
+}
+#middle {
+    display: flex;
+    overflow: wrap;
+    align-items: stretch;
+    justify-content: space-between;
+}
+#showT {
+    background-color: lightskyblue;
+    margin-right: 2rem;
+}
+.sup2 {
+    font-size: 2rem;
+    position: relative;
+    top: -2rem;
+}
+#forecast {
+    background-color: aliceblue;
+    flex-grow: 1;
+    overflow: auto;
+}
+#FCWrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.ficon {
+    height: 5rem;
+    width: 5rem;
+}
+.forecast {
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+@media only screen and (max-width: 450px) {
+    #title {
+        font-size: 1.2rem;
+    }
+    #icon, #drop {
+        height: 3rem;
+    }
+    #winfo {
+        margin-right: 0;
+    }
+    #temp, .ltemp, #humidity {
+        font-size: 2rem;
+    }
+    .sup {
+        font-size: 1rem;
+        position: relative;
+        top: -1rem;
+    }
+    #middle {
+        display: initial;
+    }
+}
