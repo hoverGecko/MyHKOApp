@@ -1,107 +1,160 @@
 /* Styling rules for our Web App */
 
+/* global setting, titles */
 body {
     background-color: whitesmoke;
     font-family: Verdana, Geneva, sans-serif;
-    margin: 0 2rem;
+    margin: 0 1.5rem;
 }
-#icon {
-    height: 7rem;
+small {
+    font-size: min(3vw, 1rem);
 }
-#drop {
-    height: 5rem;
-    margin-right: 0.5rem;
+#title {
+    font-size: min(6.5vw, 3rem);
+    margin-top: 1.5rem;
+    margin-bottom: 0;
 }
-#htitle, #ttitle, #ftitle {
-    font-size: 2rem;
+#htitle, #wtitle, #ttitle, #ftitle, #rtitle {
+    font-size: min(7vw, 2rem);
     margin-bottom: 1rem;
 }
-#header, #showT, #forecast {
-    padding: 2rem;
+#header, #warning, #showT, #forecast, #rainfall {
+    padding: min(5vw, 2rem);
     border-radius: 1rem;
-    margin: 0.5rem 0;
-}
-#showT, #forecast {
-    display: inline-block;
+    box-shadow: 3px 3px 2px rgba(0,0,0,0.15);
+    position: relative;
 }
 
+/* Hong Kong Weather Report Block */
 #header {
     background-color: lightblue;
+    margin: 1rem 0;
 }
 .winfo {
-    margin-right: 2rem;
+    margin-right: min(3vw, 2rem);
+    display: flex;
+    align-items: flex-end;
 }
 #winfobox {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
+    margin-right: 2rem;
 }
-#temp, .ltemp {
-    font-size: 5rem;
+#icon {
+    height: 7rem;
 }
-#humidity {
-    font-size: 2rem;
+#drop, #umbrella, #uvIcon {
+    height: min(10vw, 3rem);
+    margin-right: 0.5rem;
+}
+#temp {
+    font-size: min(20vw, 5rem);
 }
 .sup {
-    font-size: 2rem;
+    font-size: min(5vw, 2rem);
     position: relative;
-    top: -2rem;
+    top: max(-3vw, -2rem);
 }
-#middle {
+.ltemp {
+    font-size: min(17vw, 4rem);
+}
+#humidity, #rain, #uv {
+    font-size: min(5vw, 2rem);
+}
+#lastUpdateTime {
+    position: absolute;
+    font-size: max(0.5rem, min(1.5vw, 1rem));
+    right: 1rem;
+    bottom: -0.5rem;
+}
+
+#upper {
     display: flex;
+    width: 100%;
     overflow: wrap;
     align-items: stretch;
-    justify-content: space-between;
+}
+#warning {
+    background-color: rgb(61, 107, 255);
+    flex-grow: 1;
+    margin-bottom: 1rem;
+}
+#warningBlc {
+    overflow: auto;
+}
+#rainfall {
+    margin-right: 1rem;
+    margin-bottom: 1rem ;
+    background-color: rgb(102, 232, 236);
+    min-height: 8rem;
+}
+#rdata {
+    font-size: min(8vw, 3rem);
+}
+
+/* District temperature block */
+#middle {
+    display: flex;
+    width: 100%;
+    overflow: wrap;
+    align-items: stretch;
 }
 #showT {
     background-color: lightskyblue;
-    margin-right: 2rem;
+    min-height: 10rem;
+    margin-right: 1rem;
+}
+#sblock, #temp-reg, #rselect, #rain-reg {
+    font-size: min(4vw, 1rem);
 }
 .sup2 {
-    font-size: 2rem;
+    font-size: min(5vw, 2rem);
     position: relative;
-    top: -2rem;
+    top: max(-3vw, -1.5rem);
 }
+
+/* Forecast temperature block */
 #forecast {
-    background-color: aliceblue;
+    background-color: rgb(185, 216, 255);
     flex-grow: 1;
-    overflow: auto;
 }
 #FCWrap {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-}
-.ficon {
-    height: 5rem;
-    width: 5rem;
+    overflow: auto;
 }
 .forecast {
     display: inline-flex;
     align-items: center;
     flex-direction: column;
+    padding: 0.2rem;
+}
+.fweekday, .fdate, .ftemp, .fhumid {
+    font-size: max(0.6rem, min(1vw, 1rem));
+}
+.ficon {
+    width: max(50%, min(10vw, 100%));
+}
+.fPSR {
+    width: max(50%, min(5vw, 100%));
 }
 
-@media only screen and (max-width: 450px) {
-    #title {
-        font-size: 1.2rem;
-    }
-    #icon, #drop {
-        height: 3rem;
-    }
+
+@media only screen and (max-width: 500px) {
     #winfo {
         margin-right: 0;
     }
-    #temp, .ltemp, #humidity {
-        font-size: 2rem;
-    }
-    .sup {
-        font-size: 1rem;
-        position: relative;
-        top: -1rem;
-    }
-    #middle {
+    #middle, #upper {
         display: initial;
+        margin: 0;
+    }
+    #showT, #forecast, #rainfall {
+        margin: 1rem 0;
+    }
+    #forecast {
+        max-width: 100%;
     }
 }

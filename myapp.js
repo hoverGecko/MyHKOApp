@@ -24,14 +24,16 @@ getForecastJson = async () => getUrlJson(WEATHER_FORECAST_URL);
 async function main () {
 	try {
     var reportJson = await getReportJson(), forecastJson = await getForecastJson();
+    generateHeader(reportJson);
+    generateWarningBlc(reportJson);
+    generateRainfallBlc(reportJson);
+    generateTempBlc(reportJson);
+    generateWForecast(forecastJson);
   } catch (err) {
     console.error(err);
     document.getElementById('header').innerHTML = 
       "Unable to retrieve weather data. Check the internet connection or try again later.";
   }
-  generateHeader(reportJson);
-  generateTempBlc(reportJson);
-  generateWForecast(forecastJson);
 }
 
 // Build the header block
@@ -68,7 +70,85 @@ function generateHeader(reportJson) {
   let humData = reportJson.humidity.data[0].value;
   humBlc.innerHTML = humIcon + `<span id='humidity'>${humData}%</span>`;
   winfoContainer.append(humBlc);
+
+  let rainBlc = document.createElement('span');
+  rainBlc.className = 'winfo';
+  let rainIcon = "<img id='umbrella' src='images/rain-48.png'>";
+  let vol = reportJson.rainfall.data[13].max;
+  rainBlc.innerHTML = rainIcon + "<span id='rain'>" + vol + "<small>mm</small></span>";
+  winfoContainer.append(rainBlc);
+
+  if (Object.keys(reportJson.uvindex.data).length !== 0) {
+    let UVBlc = document.createElement('span');
+    UVBlc.className = 'winfo';
+    let UVIcon = "<img id='uvIcon' src='images/uv-48.png'>";
+    let UVVol = reportJson.uvindex.data[0].value;
+    let UVDesc = reportJson.uvindex.data[0].desc;
+    UVBlc.innerHTML = UVIcon + "<span id='uv'>" + UVVol + "<small>(" + UVDesc + ")</small></span>";
+    winfoContainer.append(UVBlc);
+  }
+
+  let lastUpdateTimeBlc = document.createElement('p');
+  lastUpdateTimeBlc.id = 'lastUpdateTime';
+  let st = reportJson.updateTime.indexOf("T")+1;
+  lastUpdateTimeBlc.innerHTML = `Last Update: ${reportJson.updateTime.substring(st, st+5)}`;
+  header.append(lastUpdateTimeBlc);
+
 }
+
+function generateWarningBlc(reportJson) {
+  let warning = document.getElementById('warning');
+  let wtitle = document.createElement('div');
+  wtitle.id = 'wtitle';
+  wtitle.innerHTML = 'Warning';
+  warning.append(wtitle);
+
+  let warningBlc = document.createElement('div');
+  warningBlc.id = 'warningBlc';
+  if (Object.keys(reportJson.warningMessage).length === 0) {
+    warningBlc.innerHTML = "There is currently no warning."
+  }
+  for (let w of reportJson.warningMessage) {
+    warningBlc.innerHTML += `${w}\n`;
+  }
+  warning.append(warningBlc);
+}
+
+function generateRainfallBlc(reportJson) {
+  let rainfall = document.getElementById('rainfall');
+
+  let rtitle = document.createElement('div');
+  rtitle.id = 'rtitle';
+  rtitle.innerHTML = 'District Rainfall';
+  rainfall.append(rtitle);
+
+  let rainfallArray = JSON.parse(JSON.stringify(reportJson.rainfall.data));
+  rainfallArray.sort((a, b) => {
+    let p = a.place, q = b.place;
+    if (p < q) return -1;
+    else if (p == q) return 0;
+    else return 1;
+  });
+
+  let rainfallData = document.createElement('div');
+  rainfallData.id = 'rselect';
+  let roptions = '';
+  rainfallArray.forEach((ele, idx) => {
+    roptions += `<option value="${idx}">${ele.place}</option>`;
+  });
+  let rselect = '<label>Select the district: </label><select id="rain-reg">'+roptions+'</select>';
+  rainfallData.innerHTML = rselect;
+  rainfall.append(rainfallData);
+
+  let rblock = document.createElement('div');
+  rblock.id = 'rdata';
+  rainfall.append(rblock);
+  document.getElementById('rain-reg').addEventListener('change', event => {
+    let rMax = rainfallArray[event.target.value].max;
+    document.getElementById('rdata').innerHTML = `<img id='umbrella' src='images/rain-48.png'><span class='rmax'>${rMax}<small>mm</small></span>`;
+  });
+}
+
 
 //Build the selection block for selecting temp data of different locations
 function generateTempBlc(reportJson) {
@@ -93,16 +173,17 @@ function generateTempBlc(reportJson) {
   myTemp.forEach((ele, idx) => {
     toptions += `<option value="${idx}">${ele.place}</option>`;
   });
-  let tselect = '<label>Select the location</label><select name="temp" id="temp-reg">'+toptions+'</select>';
+  let tselect = '<label>Select the location: </label><select name="temp" id="temp-reg">'+toptions+'</select>';
   tempData.innerHTML = tselect;
   showT.append(tempData);
 
   let tblock = document.createElement('div');
   tblock.id = 'tblock';
   showT.append(tblock);
+  tblock.innerHTML = `<span class='ltemp'> -</span><span class="sup2">°C</span>`;
   document.getElementById('temp-reg').addEventListener('change', event => {
     let value = myTemp[event.target.value].value;
-    document.getElementById('tblock').innerHTML = `<span class='ltemp'>${value}</span><span class="sup2">°C</span>`;
+    tblock.innerHTML = `<span class='ltemp'>${value}</span><span class="sup2">°C</span>`;
   });
 }
 
@@ -122,10 +203,11 @@ function generateWForecast(forecastJson) {
     let forecast = document.createElement('div');
     forecast.setAttribute('class', 'forecast');
     let date = parseInt(day.forecastDate.substring(6))+'/'+parseInt(day.forecastDate.substring(4,6));
-    let fWeek = `<span class='fweek'>${day.week.slice(0,3)} ${date}</span>`;
+    let fWeekday = `<span class='fweekday'>${day.week.slice(0,3)}</span>`;
+    let fDate =  `<span class='fdate'>${date}</span>`;
     let fTemp = `<span class='ftemp'>${day.forecastMintemp.value}-${day.forecastMaxtemp.value}°C</span>`;
     let fHumid = `<span class='fhumid'>${day.forecastMinrh.value}-${day.forecastMaxrh.value}%</span>`;
-    let fIcon = `<img class='ficon' src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic${day.ForecastIcon}.png'`;
+    let fIcon = `<img class='ficon' src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic${day.ForecastIcon}.png'>`;
 
     const PSRImgSet = {
       'High': 'https://www.hko.gov.hk/common/images/PSRHigh_50_light.png', 
@@ -136,9 +218,8 @@ function generateWForecast(forecastJson) {
     };
 
     let PSRImg = PSRImgSet[day.PSR];
-    let PSR = `<img class='fIcon PSR' src'${PSRImg}'>`;
-    forecast.innerHTML = fWeek + fIcon + PSR + fTemp + fHumid;
+    let PSR = `<img class="fPSR" src="${PSRImg}">`;
+    forecast.innerHTML = fWeekday + fDate + fIcon + PSR + fTemp + fHumid;
     FCWrap.append(forecast);
   }
 }
-
