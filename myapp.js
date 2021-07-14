@@ -75,11 +75,11 @@ function generateHeader(reportJson) {
   let rainBlc = document.createElement('span');
   rainBlc.className = 'winfo';
   let rainIcon = "<img id='umbrella' src='images/rain-48.png'>";
-  let vol = reportJson.rainfall.data[13].max;
+  var vol = reportJson.rainfall.data[13].max;
   rainBlc.innerHTML = rainIcon + "<span id='rain'>" + vol + "<small>mm</small></span>";
   winfoContainer.append(rainBlc);
 
-  if (Object.keys(reportJson.uvindex.data).length !== 0) {
+  if (reportJson.uvindex !== "") {
     let UVBlc = document.createElement('span');
     UVBlc.className = 'winfo';
     let UVIcon = "<img id='uvIcon' src='images/uv-48.png'>";
@@ -92,9 +92,9 @@ function generateHeader(reportJson) {
   let lastUpdateTimeBlc = document.createElement('p');
   lastUpdateTimeBlc.id = 'lastUpdateTime';
   let st = reportJson.updateTime.indexOf("T")+1;
+  var hour = reportJson.updateTime.substring(st, st+2);
   lastUpdateTimeBlc.innerHTML = `Last Update: ${reportJson.updateTime.substring(st, st+5)}`;
   header.append(lastUpdateTimeBlc);
-
 }
 
 
@@ -107,12 +107,13 @@ function generateWarningBlc(reportJson) {
 
   let warningBlc = document.createElement('div');
   warningBlc.id = 'warningBlc';
-  if (Object.keys(reportJson.warningMessage).length === 0) {
+  if (reportJson.warningMessage === "") {
     warningBlc.innerHTML = "There is currently no warning."
   }
-  for (let w of reportJson.warningMessage) {
+  else for (let w of reportJson.warningMessage) {
     warningBlc.innerHTML += `${w}\n`;
   }
+
   warning.append(warningBlc);
 }
 
