@@ -22,12 +22,14 @@ small {
     box-shadow: 5px 5px 5px rgba(0,0,0,0.15);
     position: relative;
 }
+#upper, #middle {
+    position: relative;
+}
 
 /* Hong Kong Weather Report Block */
 #header {
     background-color: rgb(173, 216, 230);
-    margin: 0 1rem;
-    margin-top: 1rem;
+    margin: 1rem 1rem 0 1rem;
     overflow: hidden;
 }
 .winfo {
@@ -87,12 +89,12 @@ small {
 
 #upper {
     display: flex;
-    margin: 1rem 0;
     overflow: auto;
     justify-content: space-between;
+    z-index: 30;
 }
 #warning {
-    margin-right: 1rem;
+    margin: 1rem 1rem 1rem 0;
     background-color: rgb(61, 107, 255);
     flex-grow: 1;
 }
@@ -100,10 +102,10 @@ small {
     overflow: auto;
 }
 #rainfall {
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin: 1rem;
     background-color: rgb(102, 232, 236);
     min-height: 8rem;
+    z-index: 100;
 }
 #rdata {
     margin-top: 0.5rem;
@@ -113,8 +115,9 @@ small {
 /* District temperature block */
 #middle {
     display: flex;
-    overflow: wrap;
+    margin-top: 0;
     margin-bottom: 1rem;
+    z-index: 20;
 }
 #showT {
     background-color: lightskyblue;
@@ -152,7 +155,7 @@ small {
     padding: 0.2rem;
 }
 .fweekday, .fdate, .ftemp, .fhumid {
-    font-size: max(0.6rem, min(1vw, 1rem));
+    font-size: max(0.5rem, min(1vw, 1rem));
 }
 .ficon {
     width: max(50%, min(10vw, 75%));
@@ -162,7 +165,7 @@ small {
 }
 
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
     #middle, #upper {
         display: initial;
         margin: 0;

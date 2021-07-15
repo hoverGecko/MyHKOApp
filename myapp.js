@@ -146,10 +146,13 @@ function generateRainfallBlc(reportJson) {
   let rblock = document.createElement('div');
   rblock.id = 'rdata';
   rainfall.append(rblock);
-  document.getElementById('rdata').innerHTML = `<img id='umbrella' src='images/rain-48.png'><span class='rmax'>-<small>mm</small></span>`;
+  let rMax = rainfallArray[0].max;
+  let imgId = rMax === 0 ? 'sun-48.png' : 'rain-48.png';
+  document.getElementById('rdata').innerHTML = `<img id='umbrella' src='images/${imgId}'><span class='rmax'>${rMax}<small>mm</small></span>`;
   document.getElementById('rain-reg').addEventListener('change', event => {
-    let rMax = rainfallArray[event.target.value].max;
-    document.getElementById('rdata').innerHTML = `<img id='umbrella' src='images/rain-48.png'><span class='rmax'>${rMax}<small>mm</small></span>`;
+    rMax = rainfallArray[event.target.value].max;
+    imgId = rMax === 0 ? 'sun-48.png' : 'rain-48.png';
+    document.getElementById('rdata').innerHTML = `<img id='umbrella' src='images/${imgId}'><span class='rmax'>${rMax}<small>mm</small></span>`;
   });
 }
 
@@ -184,8 +187,10 @@ function generateTempBlc(reportJson) {
   tblock.id = 'tblock';
   showT.append(tblock);
   tblock.innerHTML = `<span class='ltemp'> -</span><span class="sup2">°C</span>`;
+  let value = myTemp[0].value;
+  tblock.innerHTML = `<span class='ltemp'>${value}</span><span class="sup2">°C</span>`;
   document.getElementById('temp-reg').addEventListener('change', event => {
-    let value = myTemp[event.target.value].value;
+    value = myTemp[event.target.value].value;
     tblock.innerHTML = `<span class='ltemp'>${value}</span><span class="sup2">°C</span>`;
   });
 }
