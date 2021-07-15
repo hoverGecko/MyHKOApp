@@ -156,6 +156,7 @@ small {
 }
 .fweekday, .fdate, .ftemp, .fhumid {
     font-size: max(0.5rem, min(1vw, 1rem));
+    white-space: nowrap;
 }
 .ficon {
     width: max(50%, min(10vw, 75%));
