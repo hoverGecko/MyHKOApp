@@ -155,14 +155,14 @@ small {
     padding: 0.2rem;
 }
 .fweekday, .fdate, .ftemp, .fhumid {
-    font-size: max(0.5rem, min(1vw, 1rem));
+    font-size: max(0.5rem, min(1.2vw, 1rem));
     white-space: nowrap;
 }
 .ficon {
-    width: max(50%, min(10vw, 75%));
+    width: max(70%, min(18vw, 75%));
 }
 .fPSR {
-    width: max(50%, min(5vw, 60%));
+    width: max(60%, min(12vw, 60%));
 }
 
 
